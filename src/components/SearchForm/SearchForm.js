@@ -22,7 +22,7 @@ export default function SearchForm() {
     <form className='search_form_main'
     onSubmit={(e) => searchApi(e)}
     > 
-      <label to=''>Search for anything Star Wars Related: </label>
+      <label to='search'>Search for anything Star Wars Related: </label>
       <input 
       // html attributes
       type='text' name='search' id='search' 
