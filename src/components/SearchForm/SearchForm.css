@@ -1,0 +1,10 @@
+.search_form_main {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  margin: 0 20% 0 20%;
+}
+
+.search_form_main input[type=submit] {
+  width: 25%;
+}
