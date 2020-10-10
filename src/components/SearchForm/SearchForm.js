@@ -1,5 +1,9 @@
 import React, {useContext, useState} from 'react';
+// context
 import Context from '../../Context';
+// api function import
+import apiFetch from '../../api-services';
+// css
 import './SearchForm.css';
 
 export default function SearchForm() {
@@ -13,9 +17,10 @@ export default function SearchForm() {
 
   const searchApi = (e) => {
     e.preventDefault();
-    fetch(`https://swapi-thinkful.herokuapp.com/api/people/?search=${searchTerm}`)
-    .then(response => response.json())
-    .then(data => context.addData(data.results))
+    apiFetch(`https://swapi-thinkful.herokuapp.com/api/people/?search=${searchTerm}`)
+    .then(searchResults => {
+      context.addData(searchResults.results)
+    })
   }
 
   return(
