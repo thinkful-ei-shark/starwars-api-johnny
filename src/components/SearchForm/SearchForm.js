@@ -29,7 +29,8 @@ export default function SearchForm() {
     e.preventDefault();
     apiFetch(`https://swapi-thinkful.herokuapp.com/api/${category}/?search=${searchTerm}`)
       .then(searchResults => {
-        context.addData(searchResults.results)
+        console.log(searchResults.results)
+        context.addSearchData(searchResults.results, category)
       })
   }
 

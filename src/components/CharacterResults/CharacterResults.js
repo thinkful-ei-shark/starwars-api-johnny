@@ -1,5 +1,5 @@
 import React from 'react';
-import ResultsItems from './ResultsItems';
+import ResultsItems from './CharacterResultsItems';
 
 export default function Results(props) {
   console.log('result props', props.data)

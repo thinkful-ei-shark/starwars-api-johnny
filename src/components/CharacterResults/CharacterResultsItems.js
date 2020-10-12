@@ -16,12 +16,13 @@ export default function ResultsItems(props) {
   
 
   useEffect(() => {
+    // fetch homeworld data
     const homeworldDataFetch = async ()  => {
       await apiFetch(homeworld)
       // setting newHomeworld state to the new data passed from homeworldFetch
       .then(homeworldData => setnewHomeworld(homeworldData.name));
     }
-
+    // fetch film data to be stored in filmList state
     const filmsDataFetch = async ()  => {
       await films.forEach(film => {
         fetch(film)
@@ -29,19 +30,18 @@ export default function ResultsItems(props) {
         .then(data => setFilmList(filmList => [...filmList, data.title]))
       })
     }
-
+    // call each fetch function
     homeworldDataFetch();
     filmsDataFetch()
 
   }, [])
-
+  
+  // mapping over filmList state to create a jsx list of films
   const renderFilms = filmList.map((film, index) => {
     return <li key={index}>{film}</li>
   })
 
   
-  // apiFunc.homeworldDataFetch(homeworldURL)
-
   /*
   * export homeWorldService = { data: (cb) => {...; cb(data);}} 
   * cb = callback
