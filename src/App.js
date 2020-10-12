@@ -21,9 +21,10 @@ function App() {
   const value = {
     addData: handleAddData
   }
+  console.log(data);
   return (
     <Context.Provider value={value}>
-    <div className="App">
+    <div className="App flex flex-col">
       <Header />
       <SearchForm />
       <Results data={data}/>

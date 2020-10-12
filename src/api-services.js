@@ -1,13 +1,9 @@
-const apiFetch = (...args) => {
+const apiFetch = async (...args) => {
   let error;
-  return fetch(...args)
+  return await fetch(...args)
   .then(response => {
     if(!response.ok) {
       error = { code: response.status };
-      if(!response.headers.get('content-type').includes('json')) {
-        error.message = response.statusText;
-        return Promise.reject(error);
-      }
     }
     return response.json();
   })
@@ -19,5 +15,7 @@ const apiFetch = (...args) => {
     return data;
   })
 }
+
+
 
 export default apiFetch;

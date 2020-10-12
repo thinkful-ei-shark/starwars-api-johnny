@@ -1,27 +1,47 @@
-import React from 'react';
-import './ResultsItems.css'
+import React, {useState, useEffect} from 'react';
+
+import apiFetch from '../../api-services';
+
+
 
 export default function ResultsItems(props) {
-  const {birth_year, eye_color, films, gender, hair_color, height, homeworld, mass, name} = props.data
+  const {birth_year, eye_color, films, gender, hair_color, height, homeworld, name} = props.data
 
   /*
   * Look up useEffect for componentDidMount
   */
+  
+  const [newHomeworld, setnewHomeworld] = useState();
+  const [filmList, setFilmList] = useState([]);
+  
 
-  const [newHomeworld, setnewHomeworld] = React.useState();
-  const homeWorldData = async () => {
-    await fetch(homeworld, {
-      headers: {
-        'content-type' : 'application/json'
-      }
-    })
-    .then(response => response.json())
-    .then(data => {
-      setnewHomeworld(data.name);
-      console.log(data);
-    })
-  }
-  homeWorldData();
+  useEffect(() => {
+    const homeworldDataFetch = async ()  => {
+      await apiFetch(homeworld)
+      // setting newHomeworld state to the new data passed from homeworldFetch
+      .then(homeworldData => setnewHomeworld(homeworldData.name));
+    }
+
+    const filmsDataFetch = async ()  => {
+      await films.forEach(film => {
+        fetch(film)
+        .then(response => response.json())
+        .then(data => setFilmList(filmList => [...filmList, data.title]))
+      })
+    }
+
+    homeworldDataFetch();
+    filmsDataFetch()
+
+  }, [])
+
+  const renderFilms = filmList.map((film, index) => {
+    return <li key={index}>{film}</li>
+  })
+
+  
+  // apiFunc.homeworldDataFetch(homeworldURL)
+
   /*
   * export homeWorldService = { data: (cb) => {...; cb(data);}} 
   * cb = callback
@@ -33,11 +53,16 @@ export default function ResultsItems(props) {
   * response object always has a data property on success.
   * response object always has an error property on failure.
   */
+
   return(
     <div className='results_item'>
       <h3>{name}</h3>
       <ul>
-        <li>Can be seen in: {films}</li>
+        <li>Can be seen in:
+          <ul>
+            {renderFilms}
+          </ul>
+        </li>
         <li>Born: {birth_year}</li>
         <li>Home Planet: {newHomeworld}</li>
         <li>Gender: {gender}</li>
