@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react';
 
 import apiFetch from '../../api-services';
 
+import './CharacterResultsItems.css'
+
 
 
 export default function ResultsItems(props) {
@@ -16,6 +18,7 @@ export default function ResultsItems(props) {
   
 
   useEffect(() => {
+    let mounted = true;
     // fetch homeworld data
     const homeworldDataFetch = async ()  => {
       await apiFetch(homeworld)
@@ -33,6 +36,10 @@ export default function ResultsItems(props) {
     // call each fetch function
     homeworldDataFetch();
     filmsDataFetch()
+
+    return function cleanup() {
+      mounted = false;
+    }
 
   }, [])
   
@@ -55,10 +62,10 @@ export default function ResultsItems(props) {
   */
 
   return(
-    <div className='results_item'>
-      <h3>{name}</h3>
+    <div className='results_container'>
+      <h3 className='results_header'>{name}</h3>
       <ul>
-        <li>Can be seen in:
+        <li className='results_film-list'>Can be seen in:
           <ul>
             {renderFilms}
           </ul>

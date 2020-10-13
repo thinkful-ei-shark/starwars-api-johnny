@@ -1,0 +1,24 @@
+.results_container {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  display: flex;
+  width: 50%;
+  margin: 0 auto;
+  padding: 75px 75px 75px 75px;
+  border: solid 1px white; 
+  border-radius: 3px;
+}
+
+.results_header {
+  font-size: 1.5em;
+  text-shadow: 0px 0px 5px rgba(0, 237, 20, 1),
+               0px 0px 10px rgba(0, 255, 22, 1),
+               0px 0px 15px rgba(92, 255, 106, 1)
+  ;
+}
+
+.results_film-list {
+  list-style: none;
+}

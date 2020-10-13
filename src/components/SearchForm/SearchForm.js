@@ -4,7 +4,7 @@ import Context from '../../Context';
 // api function import
 import apiFetch from '../../api-services';
 // css
-
+import './SearchForm.css'
 
 export default function SearchForm() {
   // add context so that we can pass data up to App.js
@@ -34,28 +34,43 @@ export default function SearchForm() {
       })
   }
 
+  // conditional rendering on search label
+  let categoryPicked;
+  const searchLabelConditionalRender = () => {
+    if(category === 'people') {
+      categoryPicked = 'Characters'
+    } else {
+      categoryPicked = category.charAt(0).toUpperCase() + category.slice(1)
+    }
+  }
+
+  searchLabelConditionalRender();
+
 // Being able to select whether you want to search for planets
 // , spaceships, vehicles, characters, films or species
 
   return (
-    <form className='search_form_main'
+    <form className='search-form__main'
       onSubmit={(e) => searchApi(e)}
     >
-      <label className='text-6xl text-white' to='search'>Search for anything Star Wars Related: </label>
-      <input
-        // html attributes
-        type='text' name='search' id='search'
-        // event handler
-        onChange={(e) => searchTermHandler(e)}
-      />
-      <select onChange={(e) => categoryHandler(e)}>
+      <label htmlFor='categorySelect' className='search-form__select-label'>Select a Category:</label>
+      <select className='search-form__select' id='categorySelect' onChange={(e) => categoryHandler(e)}>
         <option value='people'>Characters</option>
         <option value='starships'>Starships</option>
         <option value='vehicles'>Vehicles</option>
         <option value='films'>Films</option>
         <option value='species'>Species</option>
       </select>
-      <input type='submit' />
+      <label className='search-form__input-label' htmlFor='search'>Search for anything Star Wars {categoryPicked} Related: </label>
+      <input
+        // html attributes
+        className='search-form__input'
+        type='text' name='search' id='search'
+        placeholder={`${categoryPicked} name`}
+        // event handler
+        onChange={(e) => searchTermHandler(e)}
+      />
+      <input className='search-form__submit' type='submit' />
     </form>
   )
 }
