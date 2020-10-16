@@ -28,7 +28,7 @@ export default function SearchForm() {
   const searchApi = (e) => {
     e.preventDefault();
     context.setLoading(true);
-    apiFetch(`https://swapi-thinkful.herokuapp.com/api/${category}/?search=${searchTerm}`)
+    apiFetch.initFetch(`https://swapi-thinkful.herokuapp.com/api/${category}/?search=${searchTerm}`)
       .then(searchResults => {
         context.addSearchData(searchResults.results, category)
         context.setLoading(false);

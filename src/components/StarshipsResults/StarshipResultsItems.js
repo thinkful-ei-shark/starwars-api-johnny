@@ -30,6 +30,7 @@ export default function StarshipResultsItems(props) {
     }
 
     filmsDataFetch()
+    // clean up useEffect
     return function cleanup() {
       mounted = false;
     }
@@ -42,10 +43,6 @@ export default function StarshipResultsItems(props) {
     return <li key={index}>{film}</li>
   })
 
-  // <div className='results_container'>
-  // <h3 className='results_header'>{name}</h3>
-  // <ul>
-  //   <li className='results_film-list'>
 
   return (
     <div className='results_container'>

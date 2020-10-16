@@ -29,7 +29,6 @@ function App() {
 
   const categoryRender = (category) => {
     if(loading) {
-      console.log('loading', loading)
       return <Loading />
     }
     else if(category === 'people') {

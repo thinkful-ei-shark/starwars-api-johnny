@@ -19,19 +19,17 @@ export default function ResultsItems(props) {
 
   useEffect(() => {
     let mounted = true;
-    // fetch homeworld data
-    const homeworldDataFetch = async ()  => {
-      await apiFetch(homeworld)
-      // setting newHomeworld state to the new data passed from homeworldFetch
+    // homeworld fetch from apiFetch import
+    const homeworldDataParse = async () => {
+      await apiFetch.homeworldDataFetch(homeworld)
       .then(homeworldData => {
-        console.log(homeworldData)
         if(mounted) {
           setnewHomeworld(homeworldData.name)
         }
-      });
+      })
     }
     // call each fetch function
-    homeworldDataFetch();
+    homeworldDataParse();
     return function cleanup() {
       mounted = false;
     }
@@ -40,8 +38,7 @@ export default function ResultsItems(props) {
 
   useEffect(() => {
       let mounted = true;
-        // fetch film data to be stored in filmList state
-        const filmsDataFetch = async ()  => {
+      const filmsDataFetch = async ()  => {
           await films.forEach(film => {
             fetch(film)
             .then(response => {
@@ -52,7 +49,8 @@ export default function ResultsItems(props) {
             .then(data => setFilmList(filmList => [...filmList, data.title]))
           })
         }
-        filmsDataFetch()
+        filmsDataFetch();
+        // clean up for useEffect
         return () => mounted = false;
   }, [])
   
@@ -75,7 +73,7 @@ export default function ResultsItems(props) {
   */
 
 
-  
+
   return(
     <div className='results_container'>
       <h3 className='results_header'>{name}</h3>
