@@ -1,6 +1,11 @@
-const apiFetch = async (...args) => {
+const apiFetch = async (arg) => {
   let error;
-  return await fetch(...args)
+  return await fetch(arg, {
+    headers: {
+      'Content-Type' : 'application/json',
+      'Accept': 'application/json'
+    }
+  })
   .then(response => {
     if(!response.ok) {
       error = { code: response.status };
@@ -8,7 +13,8 @@ const apiFetch = async (...args) => {
     return response.json();
   })
   .then(data => {
-    if(error) {
+    console.log(data)
+      if(error) {
       error.message = data.message;
       return Promise.reject(error);
     }

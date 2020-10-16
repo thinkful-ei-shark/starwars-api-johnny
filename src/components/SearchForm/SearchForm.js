@@ -27,10 +27,11 @@ export default function SearchForm() {
   */
   const searchApi = (e) => {
     e.preventDefault();
+    context.setLoading(true);
     apiFetch(`https://swapi-thinkful.herokuapp.com/api/${category}/?search=${searchTerm}`)
       .then(searchResults => {
-        console.log(searchResults.results)
         context.addSearchData(searchResults.results, category)
+        context.setLoading(false);
       })
   }
 
@@ -57,9 +58,6 @@ export default function SearchForm() {
       <select className='search-form__select' id='categorySelect' onChange={(e) => categoryHandler(e)}>
         <option value='people'>Characters</option>
         <option value='starships'>Starships</option>
-        <option value='vehicles'>Vehicles</option>
-        <option value='films'>Films</option>
-        <option value='species'>Species</option>
       </select>
       <label className='search-form__input-label' htmlFor='search'>Search for anything Star Wars {categoryPicked} Related: </label>
       <input

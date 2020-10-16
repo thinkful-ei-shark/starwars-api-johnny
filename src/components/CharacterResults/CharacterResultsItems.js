@@ -23,24 +23,37 @@ export default function ResultsItems(props) {
     const homeworldDataFetch = async ()  => {
       await apiFetch(homeworld)
       // setting newHomeworld state to the new data passed from homeworldFetch
-      .then(homeworldData => setnewHomeworld(homeworldData.name));
-    }
-    // fetch film data to be stored in filmList state
-    const filmsDataFetch = async ()  => {
-      await films.forEach(film => {
-        fetch(film)
-        .then(response => response.json())
-        .then(data => setFilmList(filmList => [...filmList, data.title]))
-      })
+      .then(homeworldData => {
+        console.log(homeworldData)
+        if(mounted) {
+          setnewHomeworld(homeworldData.name)
+        }
+      });
     }
     // call each fetch function
     homeworldDataFetch();
-    filmsDataFetch()
-
     return function cleanup() {
       mounted = false;
     }
 
+  }, [])
+
+  useEffect(() => {
+      let mounted = true;
+        // fetch film data to be stored in filmList state
+        const filmsDataFetch = async ()  => {
+          await films.forEach(film => {
+            fetch(film)
+            .then(response => {
+              if(mounted) {
+                return  response.json()
+              }
+            })
+            .then(data => setFilmList(filmList => [...filmList, data.title]))
+          })
+        }
+        filmsDataFetch()
+        return () => mounted = false;
   }, [])
   
   // mapping over filmList state to create a jsx list of films
@@ -61,11 +74,14 @@ export default function ResultsItems(props) {
   * response object always has an error property on failure.
   */
 
+
+  
   return(
     <div className='results_container'>
       <h3 className='results_header'>{name}</h3>
       <ul>
-        <li className='results_film-list'>Can be seen in:
+        <li className='results_film-list'>
+          <h3>Can be seen in:</h3>
           <ul>
             {renderFilms}
           </ul>

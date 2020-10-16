@@ -9,17 +9,30 @@ export default function StarshipResultsItems(props) {
 
   // use effect to mimic component did mount
   useEffect(() => {
+    let mounted = true;
     // fetch film data
     const filmsDataFetch = async ()  => {
       await films.forEach(film => {
-        fetch(film)
-        .then(response => response.json())
+        fetch(film, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          }
+        })
+        .then(response => {
+          if(mounted) {
+            return response.json()
+          }
+        })
         // store films parsed data into filmList, adding not overwriting
         .then(data => setFilmList(filmList => [...filmList, data.title]))
       })
     }
 
     filmsDataFetch()
+    return function cleanup() {
+      mounted = false;
+    }
   }, [])
 
 
@@ -29,11 +42,16 @@ export default function StarshipResultsItems(props) {
     return <li key={index}>{film}</li>
   })
 
+  // <div className='results_container'>
+  // <h3 className='results_header'>{name}</h3>
+  // <ul>
+  //   <li className='results_film-list'>
+
   return (
-    <div className='results_item'>
-    <h3>{name}</h3>
+    <div className='results_container'>
+    <h3 className='results_header'>{name}</h3>
     <ul>
-      <li>Can be seen in:
+      <li className='results_film-list'>Can be seen in:
         <ul>
           {renderFilms}
         </ul>
